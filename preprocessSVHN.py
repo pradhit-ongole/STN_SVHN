@@ -8,8 +8,8 @@ def preprocess(x_train, x_test, y_train, y_test):
     y_train[y_train==10]=0
     y_test[y_test==10]=0
 
-    x_train = x_train[:,:,4:27,:]
-    x_test = x_test[:,:,4:27,:]
+    x_train = x_train[:,:,6:25,:]
+    x_test = x_test[:,:,6:25,:]
 
     x_train = x_train/255
     x_test = x_test/255
