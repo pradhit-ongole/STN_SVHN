@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import math
-from samplerNinterpolation import sample_interpolate
+from sampler2 import BilinearInterpolation
 from utils import get_initial_weights
 
 
@@ -28,7 +28,7 @@ def STN_Model(input_shape=(32, 32, 3), sampling_size=(32, 32), num_classes=10, r
     locnet = layers.Dense(6, weights=weights)(locnet)
 
     # Grid generator and bilenear interpolator layer
-    sampler = sample_interpolate(sampling_size)([STN_Input, locnet])
+    sampler = Bilinear_Interpolation(sampling_size)([STN_Input, locnet])
 
     # Classification layer
     classifier = layers.Conv2D(48, (5, 5), padding='same', activation = 'relu')(sampler)
