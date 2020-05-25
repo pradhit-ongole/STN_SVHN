@@ -48,7 +48,8 @@ class sample_interpolate(tf.keras.layers.Layer):
 
         #completed
 
-	def _get_pixel_value(self, img , x, y):
+	'''
+    def _get_pixel_value(self, img , x, y):
 		
 			
 		#should be used for the other dataset
@@ -66,7 +67,7 @@ class sample_interpolate(tf.keras.layers.Layer):
 		indices = tf.stack([b, y, x], 3)
 
 		return tf.gather_nd(img, indices)
-
+    '''
 
 	def _grid_gen(self, height, width, theta):
 		
@@ -103,14 +104,19 @@ class sample_interpolate(tf.keras.layers.Layer):
 		H = tf.shape(img)[1]
 		W = tf.shape(img)[2]
         channels = tf.shape(img)[3]
-		max_y = tf.cast(H-1, 'int32')
+		
+        max_y = tf.cast(H-1, 'int32')
 		max_x = tf.cast(W-1, 'int32')
-		zero = tf.zeros([], dtype='int32')
+		
+        zero = tf.zeros([], dtype='int32')
+        
         W_f = tf.cast(W, 'float32')
         H_f = tf.cast(H, 'float32')
-		x_f = tf.cast(x, 'float32')
+		
+        x_f = tf.cast(x, 'float32')
 		y_f = tf.cast(y, 'float32')
-		x = 0.5 * ((x_f + 1.0) * W_f)
+		
+        x = 0.5 * ((x_f + 1.0) * W_f)
 		y = 0.5 * ((y_f + 1.0) * H_f)
 
 		x0 = tf.cast(tf.floor(x), 'int32')
