@@ -101,7 +101,7 @@ class sample_interpolate(tf.keras.layers.Layer):
 
     def _bilinear_sampler(self, img, x, y):
         
-        num_batch_1 = tf.shape(img)[0]
+        num_batch = tf.shape(img)[0]
         H = tf.shape(img)[1]
         W = tf.shape(img)[2]
         channels = tf.shape(img)[3]
