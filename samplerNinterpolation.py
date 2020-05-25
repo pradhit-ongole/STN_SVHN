@@ -28,7 +28,7 @@ class sample_interpolate(tf.keras.layers.Layer):
         #num_channels = tf.shape(U)[3]
         Width = tf.shape(U)[2]
         
-        theta_mat = tf.reshape(theta, [num, 2, 3])
+        theta_mat = tf.reshape(theta, (num, 2, 3))
         theta_mat = tf.cast(theta_mat, 'float32')
         Height_f = tf.cast(Height, 'float32')
         Width_f = tf.cast(Width, 'float32')
@@ -41,8 +41,8 @@ class sample_interpolate(tf.keras.layers.Layer):
         else:
             batch_grids = self._grid_gen(Height_f, Width_f, theta_mat)
 
-        x_s = batch_grids[:, 0, :, :].squeeze()
-        y_s = batch_grids[:, 1, :, :].squeeze()
+        x_s = tf.squeeze(batch_grids[:, 0, :, :])
+        y_s = tf.squeeze(batch_grids[:, 1, :, :])
 
         out_fmap = self._bilinear_sampler(U, x_s, y_s)
         return out_fmap
