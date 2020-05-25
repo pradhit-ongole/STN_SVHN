@@ -35,6 +35,7 @@ def random_mini_batches(X, Y, mini_batch_size = 64):
 		mini_batches.append(mini_batch)
 	return mini_batches
 
+'''
 def append_shuffle(train_data,train_label,val_data,val_label,test_data,test_label,train_aug,val_aug,test_aug):
 	m = np.size(train_data,0)
 	b = np.zeros((m, 40, 40, 1))
@@ -78,7 +79,7 @@ def append_shuffle(train_data,train_label,val_data,val_label,test_data,test_labe
 	test_sh_label = test_appl[permutation,:]
 
 	return train_sh,train_sh_label,val_sh,val_sh_label,test_sh,test_sh_label
-
+'''
 def plot_imagesNlabels(data, labels):
 	rand_mine = np.random.randint(0,data.shape[0],12)
 	sampled_x = data[rand_mine]
