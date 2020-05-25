@@ -4,7 +4,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import math
 from sampler2 import BilinearInterpolation
-from utils import get_initial_weights
+from utils2 import get_initial_weights
 
 
 def STN_Model(input_shape=(32, 32, 3), sampling_size=(32, 32), num_classes=10, reg=0.00, drop_rate=0.00):
