@@ -69,13 +69,13 @@ class sample_interpolate(tf.keras.layers.Layer):
 
         return tf.gather_nd(img, indices)
     '''
-    def _repeat(x, n_repeats):
-        with tf.variable_scope('_repeat'):
-            rep = tf.transpose(
-                tf.expand_dims(tf.ones(shape=tf.pack([n_repeats, ])), 1), [1, 0])
-            rep = tf.cast(rep, 'int32')
-            x = tf.matmul(tf.reshape(x, (-1, 1)), rep)
-            return tf.reshape(x, [-1])
+    def _repeat(self,x, n_repeats):
+        #with tf.variable_scope('_repeat'):
+        rep = tf.transpose(
+        tf.expand_dims(tf.ones(shape=tf.pack([n_repeats, ])), 1), [1, 0])
+        rep = tf.cast(rep, 'int32')
+        x = tf.matmul(tf.reshape(x, (-1, 1)), rep)
+        return tf.reshape(x, [-1])
 
     def _grid_gen(self, height, width, theta):
         
@@ -137,9 +137,9 @@ class sample_interpolate(tf.keras.layers.Layer):
         y0 = tf.clip_by_value(y0, zero, max_y)
         y1 = tf.clip_by_value(y1, zero, max_y)    
         
-        dim2 = width
-        dim1 = width*height
-        base = _repeat(tf.range(num_batch)*dim1, out_height*out_width)
+        dim2 = W
+        dim1 = W*H
+        base = self._repeat(tf.range(num_batch)*dim1, H*W)
         base_y0 = base + y0*dim2
         base_y1 = base + y1*dim2
         idx_a = base_y0 + x0
