@@ -177,4 +177,4 @@ class sample_interpolate(tf.keras.layers.Layer):
 
         
         print(out.shape)
-        return tf.reshape(out, (num_batch, H, W, channels) 
+        return tf.reshape(out, (num_batch, H, W, channels)) 
