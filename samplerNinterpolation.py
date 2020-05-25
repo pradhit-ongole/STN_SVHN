@@ -146,7 +146,7 @@ class sample_interpolate(tf.keras.layers.Layer):
         idx_c = base_y0 + x1
         idx_d = base_y1 + x1
 
-        im_flat = tf.reshape(im, tf.pack([-1, channels]))
+        im_flat = tf.reshape(img, tf.pack([-1, channels]))
         im_flat = tf.cast(im_flat, 'float32')
         Ia = tf.gather(im_flat, idx_a)
         Ib = tf.gather(im_flat, idx_b)
