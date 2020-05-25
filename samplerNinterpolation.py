@@ -168,10 +168,10 @@ class sample_interpolate(tf.keras.layers.Layer):
         wc = (x-x0_f) * (y1_f-y)
         wd = (x-x0_f) * (y-y0_f)
 
-        wa = tf.expand_dims(wa, axis=1)
-        wb = tf.expand_dims(wb, axis=1)
-        wc = tf.expand_dims(wc, axis=1)
-        wd = tf.expand_dims(wd, axis=1)
+        wa = tf.expand_dims(wa, axis=3)
+        wb = tf.expand_dims(wb, axis=3)
+        wc = tf.expand_dims(wc, axis=3)
+        wd = tf.expand_dims(wd, axis=3)
 
         out = tf.add_n([wa*Ia, wb*Ib, wc*Ic, wd*Id])
 
