@@ -24,7 +24,7 @@ def STN_Model(input_shape=(32, 32, 3), sampling_size=(32, 32), num_classes=10, r
 
     locnet = layers.Activation('tanh')(locnet)
     locnet = layers.Dropout(drop_rate)(locnet)
-    weights = get_initial_weights(50)
+    weights = get_initial_weights(32)
     locnet = layers.Dense(6, weights=weights)(locnet)
 
     # Grid generator and bilenear interpolator layer
