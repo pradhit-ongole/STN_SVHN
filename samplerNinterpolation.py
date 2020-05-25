@@ -71,8 +71,7 @@ class sample_interpolate(tf.keras.layers.Layer):
     '''
     def _repeat(self,x, n_repeats):
         #with tf.variable_scope('_repeat'):
-        rep = tf.transpose(
-        tf.expand_dims(tf.ones(shape=tf.pack([n_repeats, ])), 1), [1, 0])
+        rep = tf.transpose(tf.expand_dims(tf.ones(shape=tf.stack([n_repeats, ])), 1), [1, 0])
         rep = tf.cast(rep, 'int32')
         x = tf.matmul(tf.reshape(x, (-1, 1)), rep)
         return tf.reshape(x, [-1])
