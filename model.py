@@ -7,7 +7,7 @@ from samplerNinterpolation import sample_interpolate
 from utils import get_initial_weights
 
 
-def STN_Model(input_shape=(32, 32, 3), sampling_size=(40, 40), num_classes=10, reg=0.00, drop_rate=0.00):
+def STN_Model(input_shape=(32, 32, 3), sampling_size=(32, 32), num_classes=10, reg=0.00, drop_rate=0.00):
     # Input
     STN_Input = keras.Input(shape=input_shape, name = 'STN_Input')
 
