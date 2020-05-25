@@ -5,7 +5,8 @@ from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 import math
 
-from samplerNinterpolation import sample_interpolate
+#from samplerNinterpolation import sample_interpolate
+from sampler2 import BilinearInterpolation
 
 
 def get_initial_weights(output_size):
