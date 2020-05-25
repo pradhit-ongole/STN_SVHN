@@ -6,8 +6,8 @@ import tensorlayer as tl
 from tensorlayer.layers import *
 
 def pad_distort_im_fn(x):
-    b = np.zeros((40, 40, 3))
-    o = int((40-28)/2)
+    b = np.zeros((36, 36, 3))
+    o = int((36-28)/2)
     b[o:o+28, o:o+28,:] = x
     x = b
     x = tl.prepro.rotation(x, rg=90, is_random=True, fill_mode='constant')
