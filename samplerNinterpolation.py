@@ -69,6 +69,13 @@ class sample_interpolate(tf.keras.layers.Layer):
 
         return tf.gather_nd(img, indices)
     '''
+    def _repeat(x, n_repeats):
+        with tf.variable_scope('_repeat'):
+            rep = tf.transpose(
+                tf.expand_dims(tf.ones(shape=tf.pack([n_repeats, ])), 1), [1, 0])
+            rep = tf.cast(rep, 'int32')
+            x = tf.matmul(tf.reshape(x, (-1, 1)), rep)
+            return tf.reshape(x, [-1])
 
     def _grid_gen(self, height, width, theta):
         
@@ -129,12 +136,29 @@ class sample_interpolate(tf.keras.layers.Layer):
         x1 = tf.clip_by_value(x1, zero, max_x)
         y0 = tf.clip_by_value(y0, zero, max_y)
         y1 = tf.clip_by_value(y1, zero, max_y)    
+        
+        dim2 = width
+        dim1 = width*height
+        base = _repeat(tf.range(num_batch)*dim1, out_height*out_width)
+        base_y0 = base + y0*dim2
+        base_y1 = base + y1*dim2
+        idx_a = base_y0 + x0
+        idx_b = base_y1 + x0
+        idx_c = base_y0 + x1
+        idx_d = base_y1 + x1
 
+        im_flat = tf.reshape(im, tf.pack([-1, channels]))
+        im_flat = tf.cast(im_flat, 'float32')
+        Ia = tf.gather(im_flat, idx_a)
+        Ib = tf.gather(im_flat, idx_b)
+        Ic = tf.gather(im_flat, idx_c)
+        Id = tf.gather(im_flat, idx_d)
+        '''
         Ia = img[tf.range(num_batch)[None,None,:], y0, x0]
         Ib = img[tf.range(num_batch)[None,None,:], y1, x0]
         Ic = img[tf.range(num_batch)[None,None,:], y0, x1]
         Id = img[tf.range(num_batch)[None,None,:], y1, x1]
-
+        '''
         x0_f = tf.cast(x0, 'float32')
         x1_f = tf.cast(x1, 'float32')
         y0_f = tf.cast(y0, 'float32')
@@ -145,10 +169,10 @@ class sample_interpolate(tf.keras.layers.Layer):
         wc = (x-x0_f) * (y1_f-y)
         wd = (x-x0_f) * (y-y0_f)
 
-        wa = tf.expand_dims(wa, axis=3)
-        wb = tf.expand_dims(wb, axis=3)
-        wc = tf.expand_dims(wc, axis=3)
-        wd = tf.expand_dims(wd, axis=3)
+        wa = tf.expand_dims(wa, axis=1)
+        wb = tf.expand_dims(wb, axis=1)
+        wc = tf.expand_dims(wc, axis=1)
+        wd = tf.expand_dims(wd, axis=1)
 
         out = tf.add_n([wa*Ia, wb*Ib, wc*Ic, wd*Id])
 
