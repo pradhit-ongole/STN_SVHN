@@ -7,18 +7,17 @@ from samplerNinterpolation import sample_interpolate
 from utils import get_initial_weights
 
 
-def STN_Model(input_shape=(40, 40, 1), sampling_size=(40, 40), num_classes=10, reg=0.00, drop_rate=0.00):
+def STN_Model(input_shape=(32, 32, 3), sampling_size=(40, 40), num_classes=10, reg=0.00, drop_rate=0.00):
 	# Input
 	STN_Input = keras.Input(shape=input_shape, name = 'STN_Input')
 
 	# Layers for localization network
-	locnet = layers.Conv2D(16, (3,3), activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(reg))(STN_Input)
+	locnet = layers.Conv2D(32, (5,5), activation = 'relu', padding = 'same')(STN_Input)
+	locnet = layers.MaxPool2D(pool_size=(2, 2, padding = 'same'))(locnet)
+	locnet = layers.Conv2D(32, (5,5), activation = 'relu')(locnet)
 	locnet = layers.MaxPool2D(pool_size=(2, 2))(locnet)
-	locnet = layers.Conv2D(8, (4,4), activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(reg))(locnet)
-	locnet = layers.MaxPool2D(pool_size=(2, 2))(locnet)
-	locnet = layers.Conv2D(20, (5, 5), activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(reg))(locnet)
 	locnet = layers.Flatten()(locnet)
-	locnet = layers.Dense(50, kernel_regularizer=tf.keras.regularizers.l2(reg))(locnet)
+	locnet = layers.Dense(32)(locnet)
 	locnet = layers.Activation('relu')(locnet)
 	locnet = layers.Dropout(drop_rate)(locnet)
 	weights = get_initial_weights(50)
