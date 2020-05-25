@@ -130,10 +130,10 @@ class sample_interpolate(tf.keras.layers.Layer):
         y0 = tf.clip_by_value(y0, zero, max_y)
         y1 = tf.clip_by_value(y1, zero, max_y)    
 
-        Ia = input_img[np.arange(num_batch)[:,None,None], y0, x0]
-        Ib = input_img[np.arange(num_batch)[:,None,None], y1, x0]
-        Ic = input_img[np.arange(num_batch)[:,None,None], y0, x1]
-        Id = input_img[np.arange(num_batch)[:,None,None], y1, x1]
+        Ia = img[np.arange(num_batch)[:,None,None], y0, x0]
+        Ib = img[np.arange(num_batch)[:,None,None], y1, x0]
+        Ic = img[np.arange(num_batch)[:,None,None], y0, x1]
+        Id = img[np.arange(num_batch)[:,None,None], y1, x1]
 
         x0_f = tf.cast(x0, 'float32')
         x1_f = tf.cast(x1, 'float32')
